@@ -15,6 +15,13 @@ export async function POST(req: Request) {
     });
   }
 
+  if (!Array.isArray(messages)) {
+    return new Response(JSON.stringify({ error: "Invalid request body" }), {
+      status: 400,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+
   const result = streamText({
     model: lmstudio(LM_STUDIO_MODEL),
     messages: await convertToModelMessages(messages),
@@ -25,6 +32,7 @@ export async function POST(req: Request) {
   });
 }
 
+// Only catches errors surfaced before/during stream generation; a connection drop after the response has started streaming (e.g. a slow CPU inference request terminated mid-stream) bypasses this and reaches the browser as a generic network error.
 function toErrorMessage(error: unknown): string {
   const message = error instanceof Error ? error.message : String(error);
 
