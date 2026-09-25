@@ -20,8 +20,11 @@ export function ChatWindow({ messages, status, error, onRetry }: ChatWindowProps
   const endRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    endRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, status]);
+    const id = requestAnimationFrame(() => {
+      endRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+    });
+    return () => cancelAnimationFrame(id);
+  }, [messages, status, error]);
 
   return (
     <ScrollArea className="flex-1 min-h-0 p-6">
