@@ -18,4 +18,4 @@ A Next.js app for multi-turn, streaming chat about an uploaded image, powered by
 ## Notes
 
 - Conversation history lives only in browser memory — refreshing the page starts a new conversation.
-- No automated tests; this is a lesson/demo project. See `docs/superpowers/specs/` and `docs/superpowers/plans/` for the design spec and implementation plan.
+- No automated tests; this is a lesson/demo project.
